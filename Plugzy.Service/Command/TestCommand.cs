@@ -20,10 +20,10 @@ namespace Plugzy.Service.Command
         {
             public async Task<CommandResult<TestResponse>> Handle(TestCommand request, CancellationToken cancellationToken)
             {
-                var returnModel = new TestEntity() {IsSuccess=true };
+                var returnModel = new TestEntity() {TestData=true };
 
                 //OK
-                if (returnModel.IsSuccess)
+                if (returnModel.TestData)
                 {
                     return CommandResult<TestResponse>.GetSucceed(_mapper.Map<TestResponse>(returnModel));
                 }
