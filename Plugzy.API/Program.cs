@@ -13,7 +13,6 @@ builder.Services.AddSwaggerGen(swagger =>
     swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
