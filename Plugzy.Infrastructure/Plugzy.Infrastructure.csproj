@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugzy.Domain\Plugzy.Domain.csproj" />
+    <ProjectReference Include="..\Plugzy.Models\Plugzy.Models.csproj" />
   </ItemGroup>
 
 </Project>

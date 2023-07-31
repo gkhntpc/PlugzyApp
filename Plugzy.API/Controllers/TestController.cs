@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Plugzy.Models.Base;
 using Plugzy.Models.Request;
 using Plugzy.Models.Response;
-using Plugzy.Service.Command;
+using Plugzy.Service.TestServices.Command;
 
 namespace Plugzy.API.Controllers
 {
