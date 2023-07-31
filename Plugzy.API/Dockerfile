@@ -8,6 +8,11 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Plugzy.API/Plugzy.API.csproj", "Plugzy.API/"]
+COPY ["Plugzy.Service/Plugzy.Service.csproj", "Plugzy.Service/"]
+COPY ["Plugzy.Infrastructure/Plugzy.Infrastructure.csproj", "Plugzy.Infrastructure/"]
+COPY ["Plugzy.Models/Plugzy.Models.csproj", "Plugzy.Models/"]
+COPY ["Plugzy.Domain/Plugzy.Domain.csproj", "Plugzy.Domain/"]
+COPY ["Plugzy.Utilities/Plugzy.Utilities.csproj", "Plugzy.Utilities/"]
 RUN dotnet restore "Plugzy.API/Plugzy.API.csproj"
 COPY . .
 WORKDIR "/src/Plugzy.API"

@@ -2,7 +2,7 @@
 using Plugzy.Domain;
 using Plugzy.Models.Response;
 
-namespace Plugzy.Service.Mapper
+namespace Plugzy.Models.Mapper
 {
     public class MapperProfile : Profile
     {

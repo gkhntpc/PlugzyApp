@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugzy.Infrastructure\Plugzy.Infrastructure.csproj" />
-    <ProjectReference Include="..\Plugzy.Models\Plugzy.Models.csproj" />
+    <Compile Remove="Query\**" />
+    <EmbeddedResource Remove="Query\**" />
+    <None Remove="Query\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Query\" />
+    <ProjectReference Include="..\Plugzy.Infrastructure\Plugzy.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestServices\Query\" />
   </ItemGroup>
 
 </Project>
