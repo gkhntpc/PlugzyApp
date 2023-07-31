@@ -1,9 +1,15 @@
 using System.Reflection;
+using MediatR;
+using Plugzy.Models;
+using Plugzy.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddService();
+builder.Services.AddModels();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

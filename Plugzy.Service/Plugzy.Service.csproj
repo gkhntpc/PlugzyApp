@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AuthService\Queries\" />
     <Folder Include="TestServices\Query\" />
   </ItemGroup>
 
