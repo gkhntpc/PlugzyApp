@@ -1,7 +1,11 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Plugzy.API.Validations;
 using Plugzy.Domain.Entities;
 using Plugzy.Infrastructure;
+using Plugzy.Models.Request;
+using Plugzy.Service.Commands;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +33,8 @@ builder.Services.AddDbContext<PlugzyDbContext>(options =>
 });
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<PlugzyDbContext>();
-
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining(typeof(LoginCommand)));
+builder.Services.AddScoped<IValidator<LoginRequest>, LoginRequestValidator>();
 
 var app = builder.Build();
 
