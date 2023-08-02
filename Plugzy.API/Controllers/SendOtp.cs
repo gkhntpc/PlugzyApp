@@ -8,7 +8,7 @@ namespace Plugzy.API.Controllers;
 ///<Summary>
 /// OTP Controller
 ///</Summary>
-public class SentOtp : BaseController
+public class SendOtp : BaseController
 {
     /// <Summary>
     ///     Create Otp Endpoint
