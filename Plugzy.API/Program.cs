@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Plugzy.Domain.Entities;
+using Plugzy.Infrastructure;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +16,20 @@ builder.Services.AddSwaggerGen(swagger =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
+
+
+builder.Services.AddDbContext<PlugzyDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"),
+        options =>
+        {
+            options.MigrationsAssembly(Assembly.GetAssembly(typeof(PlugzyDbContext))!.GetName().Name);
+        });
+});
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<PlugzyDbContext>();
+
 
 var app = builder.Build();
 
