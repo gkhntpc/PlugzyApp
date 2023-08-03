@@ -14,8 +14,15 @@ public class BaseController : ControllerBase
     /// <Summary>
     ///     Base Controller with Mediator
     /// </Summary>
-    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>()!;
-    private IMediator? _mediator;
+    protected readonly IMediator _mediator;
+
+    /// <Summary>
+    ///     Base Controller Constructor with Mediator
+    /// </Summary>
+    public BaseController(IMediator mediator) 
+    {
+        _mediator = mediator;
+    }
 
     /// <Summary>
     ///     AcceptLanguage Header Value
