@@ -11,10 +11,7 @@ public static class InfrastructureServiceRegistration
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<PlugzyAppDbContext>(options =>
-        {
-            options.UseSqlServer(configuration.GetConnectionString("Development"));
-        });
+        services.AddDbContext<PlugzyAppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
         services.AddIdentity<User, Role>().AddEntityFrameworkStores<PlugzyAppDbContext>();
 
         return services;
