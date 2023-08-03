@@ -1,12 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Plugzy.Domain.Entities;
 
 public class Socket : BaseEntity
 {
+    [MaxLength(100)]
     public string Number { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal Kw { get; set; }
+    [Column(TypeName = "tinyint")]
     public int CurrentType { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal Price { get; set; }
+    [Column(TypeName = "tinyint")]
     public int SocketType { get; set; }
+    [Column(TypeName = "tinyint")]
     public int Status { get; set; }
     public bool IsActive { get; set; }
 

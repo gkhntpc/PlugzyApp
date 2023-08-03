@@ -1,11 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace Plugzy.Domain.Entities;
 
 public class User : IdentityUser<Guid>
 {
+    [MaxLength(100)]
+    public override string PhoneNumber { get; set; }
+    [MaxLength(100)]
     public string? FullName { get; set; }
+    [MaxLength(100)]
+    public override string? Email { get; set; }
+    [Column(TypeName = "tinyint")]
     public int Type { get; set; }
+    [Column(TypeName = "tinyint")]
     public int Status { get; set; }
     public DateTime LastLogin { get; set; }
     public Guid CreatedBy { get; set; }
@@ -21,7 +31,7 @@ public class User : IdentityUser<Guid>
     {
     }
 
-    public User(Guid id, int type,int status, DateTime lastLogin,
+    public User(Guid id, int type, int status, DateTime lastLogin,
                 Guid createdBy, DateTime createdAt, string? fullName = null,
                 Guid? updatedBy = null, DateTime? updatedAt = null,
                 Guid? deletedBy = null, DateTime? deletedAt = null)

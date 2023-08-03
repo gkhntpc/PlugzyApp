@@ -29,6 +29,12 @@ public class PlugzyAppDbContext : IdentityDbContext<User, Role, Guid>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        builder.Entity<User>().ToTable("Users");
+        builder.Entity<User>().Property(p => p.Id).ValueGeneratedNever();
+
+        builder.Entity<Role>().ToTable("Roles");
+        
+        builder.Entity<Charge>().HasOne(p => p.Station).WithMany().OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Plugzy.Domain.Entities;
 
 public class Notification : BaseEntity
 {
+    [MaxLength(100)]
     public string Title { get; set; }
+    [MaxLength(1000)]
     public string Description { get; set; }
     public DateTime? ReadAt { get; set; }
 

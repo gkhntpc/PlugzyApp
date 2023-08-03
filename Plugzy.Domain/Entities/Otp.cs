@@ -1,10 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Plugzy.Domain.Entities;
 
 public class Otp : BaseEntity
 {
+    [MaxLength(100)]
     public string Code { get; set; }
     public DateTime ValidTill { get; set; }
+    [MaxLength(100)]
     public string Phone { get; set; }
+    [Column(TypeName = "tinyint")]
     public int Attempts { get; set; }
     public bool IsActive { get; set; }
     public DateTime? LoginTime { get; set; }

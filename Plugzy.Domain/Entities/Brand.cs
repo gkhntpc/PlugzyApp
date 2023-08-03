@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Plugzy.Domain.Entities;
 
 public class Brand : BaseEntity
 {
+    [MaxLength(100)]
     public string Name { get; set; }
+    [MaxLength(200)]
     public string Logo { get; set; }
     public bool IsActive { get; set; }
 

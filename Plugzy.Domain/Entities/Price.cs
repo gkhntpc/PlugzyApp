@@ -1,11 +1,18 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Plugzy.Domain.Entities;
 
 public class Price : BaseEntity
 {
+    [Column(TypeName = "tinyint")]
     public int CurrentType { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal KwStart { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal KwFinish { get; set; }
+    [Column(TypeName = "tinyint")]
     public int SocketType { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal PriceAmount { get; set; }
 
     public virtual Brand Brand { get; set; }

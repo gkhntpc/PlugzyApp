@@ -1,12 +1,18 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Plugzy.Domain.Entities;
 
 public class Charge : BaseEntity
 {
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
+    [Column(TypeName = "tinyint")]
     public int CurrentType { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal Kw { get; set; }
+    [Column(TypeName = "decimal(19,2)")]
     public decimal Amount { get; set; }
+    [Column(TypeName = "tinyint")]
     public int SocketType { get; set; }
 
     public virtual User User { get; set; }

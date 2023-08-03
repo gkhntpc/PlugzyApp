@@ -1,12 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Plugzy.Domain.Entities;
 
 public class Station : BaseEntity
 {
+    [MaxLength(100)]
     public string Number { get; set; }
+    [MaxLength(100)]
     public string Name { get; set; }
+    [MaxLength(200)]
     public string Address { get; set; }
+    [MaxLength(200)]
     public string Latitude { get; set; }
+    [MaxLength(200)]
     public string Longitude { get; set; }
+    [Column(TypeName = "tinyint")]
     public int Status { get; set; }
     public bool IsIndividualPricing { get; set; }
     public bool IsActive { get; set; }

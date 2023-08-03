@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Plugzy.Domain.Entities;
 
 public class County : BaseEntity
 {
+    [MaxLength(100)]
     public string Name { get; set; }
     public bool IsActive { get; set; }
 
