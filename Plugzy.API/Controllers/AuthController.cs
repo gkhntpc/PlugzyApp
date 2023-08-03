@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Plugzy.Models.Base;
 using Plugzy.Models.Request;
 using Plugzy.Models.Response;
-using Plugzy.Service.AuthService.Commands;
+using Plugzy.Service.Auth.Commands;
 
 
 namespace Plugzy.API.Controllers
