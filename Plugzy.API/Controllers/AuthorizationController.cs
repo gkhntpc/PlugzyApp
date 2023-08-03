@@ -2,8 +2,11 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Plugzy.Models.Base;
 using Plugzy.Models.Request.Authorization;
 using Plugzy.Models.Request.Otp;
+using Plugzy.Models.Response.Authorization;
+using Plugzy.Models.Response.Otp;
 using Plugzy.Service.Features.Authorization.Commands;
 using Plugzy.Service.Features.Otp.Commands;
 
@@ -25,19 +28,17 @@ public class AuthorizationController : BaseController
     /// Authorization Endpoint [HttpPost]
     ///</Summary>
     [HttpPost("authorize")]
-    public async Task<IActionResult> Authorize([FromBody] AuthorizationRequest authorizationRequest)
+    public async Task<CommandResult<AuthorizationResponse>> Authorize([FromBody] AuthorizationRequest authorizationRequest)
     {
-        var result = await _mediator.Send(new AuthorizeCommand(authorizationRequest));
-        return Ok(result);
+        return await _mediator.Send(new AuthorizeCommand(authorizationRequest));
     }
 
     /// <Summary>
     ///     Create Otp Endpoint [HttpPost]
     /// </Summary>
     [HttpPost("sendOtp")]
-    public async Task<IActionResult> CreateOtp([FromBody] OtpRequest otpRequest)
+    public async Task<CommandResult<OtpResponse>> CreateOtp([FromBody] OtpRequest otpRequest)
     {
-        var result = await _mediator.Send(new RequestOtpCommand(otpRequest));
-        return Ok(result);
+        return await _mediator.Send(new RequestOtpCommand(otpRequest));
     }
 }

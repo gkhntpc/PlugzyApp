@@ -1,5 +1,7 @@
 using MediatR;
 
+using Microsoft.Extensions.Configuration;
+
 using Plugzy.Models.Base;
 using Plugzy.Models.Request.Otp;
 using Plugzy.Models.Response.Otp;
@@ -25,7 +27,15 @@ public class RequestOtpCommand : CommandBase<CommandResult<OtpResponse>>
 
             response.Seconds = fakeSeconds;
             response.Confirm = fakeConfirm;
+            response.Code = int.Parse(_configuration["FakeAuth:Otp"]!);
             return  CommandResult<OtpResponse>.GetSucceed("Başarı ile OTP gönderildi", response);
+        }
+
+        private readonly IConfiguration _configuration;
+
+        public Handler(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }
     }
 }
