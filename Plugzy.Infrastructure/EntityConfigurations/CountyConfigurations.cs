@@ -23,6 +23,5 @@ public class CountyConfigurations : IEntityTypeConfiguration<County>
         builder.Property(p => p.DeletedAt).HasColumnName("DeletedAt");
 
         builder.HasOne(p => p.City);
-        builder.HasOne(p => p.Country).WithMany().OnDelete(DeleteBehavior.Restrict);
     }
 }

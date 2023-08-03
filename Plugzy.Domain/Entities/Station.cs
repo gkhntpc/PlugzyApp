@@ -12,8 +12,6 @@ public class Station : BaseEntity
     public bool IsActive { get; set; }
 
     public virtual Brand Brand { get; set; }
-    public virtual Country Country { get; set; }
-    public virtual City City { get; set; }
     public virtual County County { get; set; }
     public virtual ICollection<Socket> Sockets { get; set; }
 

@@ -6,7 +6,6 @@ public class County : BaseEntity
     public bool IsActive { get; set; }
 
     public virtual City City { get; set; }
-    public virtual Country Country { get; set; }
 
     public County()
     {

@@ -34,9 +34,7 @@ public class StationConfigurations : IEntityTypeConfiguration<Station>
         builder.Property(p => p.DeletedAt).HasColumnName("DeletedAt");
 
         builder.HasOne(p => p.Brand);
-        builder.HasOne(p => p.Country).WithMany().OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(p => p.City).WithMany().OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(p => p.County).WithMany().OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(p => p.County).WithMany();
         builder.HasMany(p => p.Sockets);
     }
 }
