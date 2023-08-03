@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Plugzy.API.Validations;
 using Plugzy.Domain.Entities;
 using Plugzy.Infrastructure;
-using Plugzy.Models.Request;
 using Plugzy.Service.Commands;
 using System.Reflection;
 
@@ -21,8 +20,6 @@ builder.Services.AddSwaggerGen(swagger =>
     swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
-
-
 builder.Services.AddDbContext<PlugzyDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"),
@@ -31,10 +28,17 @@ builder.Services.AddDbContext<PlugzyDbContext>(options =>
             options.MigrationsAssembly(Assembly.GetAssembly(typeof(PlugzyDbContext))!.GetName().Name);
         });
 });
-builder.Services.AddIdentity<AppUser, IdentityRole>()
+builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
+{
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireDigit=false;
+    opt.Password.RequireNonAlphanumeric = false;
+})
     .AddEntityFrameworkStores<PlugzyDbContext>();
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining(typeof(LoginCommand)));
-builder.Services.AddScoped<IValidator<LoginRequest>, LoginRequestValidator>();
+//builder.Services.AddScoped<IValidator<LoginRequest>, LoginRequestValidator>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
