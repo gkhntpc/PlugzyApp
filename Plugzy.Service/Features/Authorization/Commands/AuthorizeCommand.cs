@@ -1,5 +1,7 @@
 using MediatR;
 
+using Microsoft.Extensions.Configuration;
+
 using Plugzy.Models.Base;
 using Plugzy.Models.Request.Authorization;
 using Plugzy.Models.Response.Authorization;
@@ -24,10 +26,10 @@ public class AuthorizeCommand : CommandBase<CommandResult<AuthorizationResponse>
 
             // validate otp, if true continue else fail result
 
-            string fakeOtp = "1234";
-            string fakeNumber = "905327080402";
-            response.AccessToken = "fake access token";
-            response.RefreshToken = "fake refresh token";
+            string fakeOtp = _configuration["FakeAuth:Otp"]!;
+            string fakeNumber = _configuration["FakeAuth:Phone"]!;
+            response.AccessToken = _configuration["FakeAuth:AccessToken"]!;
+            response.RefreshToken = _configuration["FakeAuth:RefreshToken"]!;
 
             if (request.AuthorizationRequest.otpCode != fakeOtp)
             {
@@ -36,15 +38,22 @@ public class AuthorizeCommand : CommandBase<CommandResult<AuthorizationResponse>
 
             if (request.AuthorizationRequest.phoneNumber == fakeNumber)
             {
-                response.Type = AuthorizationType.Login;
+                response.Type = (int)AuthorizationType.Login;
                 return CommandResult<AuthorizationResponse>.GetSucceed("Başarı ile login olundu", response);
             }
             // Success Register
             else
             {
-                response.Type = AuthorizationType.Register;
+                response.Type = (int)AuthorizationType.Register;
                 return CommandResult<AuthorizationResponse>.GetSucceed("Başarı ile kayıt olundu", response);
             }
+        }
+
+        private readonly IConfiguration _configuration;
+
+        public Handler(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }
     }
 }

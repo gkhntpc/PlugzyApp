@@ -1,7 +1,7 @@
 namespace Plugzy.Utilities.Constants.Authorization;
 
-public static class AuthorizationType 
+public enum AuthorizationType 
 {
-    public const int Login = 1;
-    public const int Register = 2;
+    Login,
+    Register
 }
