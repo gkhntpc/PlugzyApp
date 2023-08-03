@@ -1,21 +1,33 @@
-﻿namespace Plugzy.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Plugzy.Domain.Entities
 {
     public class Socket :BaseEntity
     {
+        [MaxLength(100)]
         public string Number { get; set; }
         public decimal Kw { get; set; }
-        public CurrentTypeEnum CurrentType { get; set; }
-        public SocketTypeEnum SocketType { get; set; }
+        public SocketCurrentType CurrentType { get; set; }
+        public SocketType SocketType { get; set; }
         public decimal Price { get; set; }
-        public bool Status { get; set; }
+        public IsIndividualPricingEnum IsIndividualPricing { get; set; }
+        public SocketStatus Status { get; set; }
         public List<Station> Stations { get; set; }
     }
-    public enum CurrentTypeEnum
+    public enum IsIndividualPricingEnum
     {
-        Ac=0, Dc=1
+        Overall,Different
     }
-    public enum SocketTypeEnum
+    public enum SocketCurrentType
     {
-        X=0,S,Bmw,Universal
+        Ac=1, Dc=2
+    }
+    public enum SocketType
+    {
+        Tesla,Supercharger
+    }
+    public enum SocketStatus
+    {
+        Off=0,On, Malfunctioning,Maintenance,Reserved
     }
 }

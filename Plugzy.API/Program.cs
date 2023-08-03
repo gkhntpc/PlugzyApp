@@ -1,11 +1,14 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Plugzy.API.Validations;
 using Plugzy.Domain.Entities;
 using Plugzy.Infrastructure;
 using Plugzy.Service.Commands;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +39,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
     opt.Password.RequireNonAlphanumeric = false;
 })
     .AddEntityFrameworkStores<PlugzyDbContext>();
-builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining(typeof(LoginCommand)));
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining(typeof(AuthorizeCommand)));
 //builder.Services.AddScoped<IValidator<LoginRequest>, LoginRequestValidator>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

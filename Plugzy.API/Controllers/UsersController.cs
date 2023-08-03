@@ -17,13 +17,18 @@ namespace Plugzy.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("Login")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommandResult<LoginResponse>))]
-        public async Task<CommandResult<LoginResponse>> Login([FromBody] LoginRequest loginRequest)
+        [HttpPost("Authorize")]
+        [ProducesResponseType(StatusCodes.Status200OK,Type =typeof(CommandResult<AuthorizeResponse>))]
+        public async Task<CommandResult<AuthorizeResponse>> Authorize([FromBody] AuthorizeRequest authorizeRequest)
         {
-            return await _mediator.Send(new LoginCommand(loginRequest));
+            return await _mediator.Send(new AuthorizeCommand(authorizeRequest));
         }
-       
+        [HttpPost("SendOtp")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommandResult<SendOtpResponse>))]
+        public async Task<CommandResult<SendOtpResponse>> SendOtp([FromBody] SendOtpRequest otpRequest)
+        {
+            return await _mediator.Send(new SendOtpCommand(otpRequest));
+        }
 
     }
 }
