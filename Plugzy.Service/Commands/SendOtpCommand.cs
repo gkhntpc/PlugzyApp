@@ -22,7 +22,8 @@ namespace Plugzy.Service.Commands
                     var sendOtpResponse = new SendOtpResponse()
                     {
                         Confirm=true,
-                        Seconds=180
+                        Seconds=180,
+                        Code=1234
                     };
                     return CommandResult<SendOtpResponse>.GetSucceed(sendOtpResponse);
                 }

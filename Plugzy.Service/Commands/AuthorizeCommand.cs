@@ -5,11 +5,7 @@ using Plugzy.Domain.Entities;
 using Plugzy.Models.Base;
 using Plugzy.Models.Request;
 using Plugzy.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Plugzy.Service.Helpers;
 
 namespace Plugzy.Service.Commands
 {
@@ -35,12 +31,7 @@ namespace Plugzy.Service.Commands
             {
                 if (request.Model.PhoneNumber == "905327080402" && request.Model.OtpCode == 1234)
                 {
-                    var authorizeResponse=new AuthorizeResponse()
-                    {
-                        AccessToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2MjM2NTEyYS04YmJjLTQ5MDUtYTZhNC0xODMwNDlkOWMxZDciLCJ1bmlxdWVfbmFtZSI6IjU0NTUzNDkzNjgiLCJDdXN0b21lcklkIjoiIiwiYWNjb3VudFR5cGUiOiJTeXN0ZW1Vc2VyIiwicm9sZSI6IlN5c3RlbVVzZXIiLCJuYmYiOjE2NTI4NjQxMTAsImV4cCI6MTY1Mjg4MjExMCwiaWF0IjoxNjUyODY0MTEwLCJpc3MiOiJpa2luY2lZZW5pIiwiYXVkIjoiUHVibGljIn0.ELAHHt8UPgSP2A1KGw-hn0UVWLfYyzfR3U64Gct7Dpo",
-                        RefreshToken="4ppanSOXYpzDSQL7z8WGnVaOMy7GshwQ9gaKnZafhR5HCAqpvw/KIoFt130mY6Cxt3iPVd/q/xsfcUTeFA3thw==",
-                        Type=1
-                    };
+                    var authorizeResponse=JwtHelper.Create(1);
                     return CommandResult<AuthorizeResponse>.GetSucceed(authorizeResponse);
                 }
                 var existUser= await _userManager.Users.SingleOrDefaultAsync(x=>x.PhoneNumber==request.Model.PhoneNumber);
@@ -57,12 +48,7 @@ namespace Plugzy.Service.Commands
                     appUser.Created();
                     var createUser= await _userManager.CreateAsync(appUser,Guid.NewGuid().ToString());
 
-                    var authorizeResponseRegister=new AuthorizeResponse()
-                    {
-                        AccessToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2MjM2NTEyYS04YmJjLTQ5MDUtYTZhNC0xODMwNDlkOWMxZDciLCJ1bmlxdWVfbmFtZSI6IjU0NTUzNDkzNjgiLCJDdXN0b21lcklkIjoiIiwiYWNjb3VudFR5cGUiOiJTeXN0ZW1Vc2VyIiwicm9sZSI6IlN5c3RlbVVzZXIiLCJuYmYiOjE2NTI4NjQxMTAsImV4cCI6MTY1Mjg4MjExMCwiaWF0IjoxNjUyODY0MTEwLCJpc3MiOiJpa2luY2lZZW5pIiwiYXVkIjoiUHVibGljIn0.ELAHHt8UPgSP2A1KGw-hn0UVWLfYyzfR3U64Gct7Dpo",
-                        RefreshToken="4ppanSOXYpzDSQL7z8WGnVaOMy7GshwQ9gaKnZafhR5HCAqpvw/KIoFt130mY6Cxt3iPVd/q/xsfcUTeFA3thw==",
-                        Type=2
-                    };
+                    var authorizeResponseRegister=JwtHelper.Create(2);
                     return CommandResult<AuthorizeResponse>.GetSucceed(authorizeResponseRegister);
                 }
                 return CommandResult<AuthorizeResponse>.GetFailed("Numara kullanımda");
