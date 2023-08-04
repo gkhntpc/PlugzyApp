@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Plugzy.Domain.Entities;
 using Plugzy.Infrastructure.Contexts;
+using Plugzy.Infrastructure.Repositories;
+using Plugzy.Infrastructure.Repositories.Contracts;
 using Plugzy.Infrastructure.Services.JwtService;
 
 namespace Plugzy.Infrastructure;
@@ -19,6 +21,8 @@ public static class InfrastructureServiceRegistration
             .AddTokenProvider(configuration["ProviderName"], typeof(DataProtectorTokenProvider<User>));
 
         services.AddScoped<IJwtService, JwtService>();
+
+        services.AddScoped<IOtpRepository, OtpRepository>();
 
         return services;
     }
