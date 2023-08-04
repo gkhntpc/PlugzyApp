@@ -12,7 +12,6 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
     <PackageReference Include="FluentValidation" Version="11.6.0" />
-    <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.20">
@@ -23,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Plugzy.Service\Plugzy.Service.csproj" />
-    <ProjectReference Include="..\Plugzy.Infrastructure\Plugzy.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

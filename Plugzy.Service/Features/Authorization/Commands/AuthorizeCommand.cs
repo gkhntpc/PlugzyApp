@@ -10,6 +10,7 @@ using Plugzy.Models.Request.Authorization;
 using Plugzy.Models.Response.Authorization;
 using Plugzy.Utilities.Constants.Authorization;
 using Plugzy.Utilities.Constants.Entity.User;
+using Plugzy.Utilities.Constants.Message;
 
 namespace Plugzy.Service.Features.Authorization.Commands;
 
@@ -44,7 +45,7 @@ public class AuthorizeCommand : CommandBase<CommandResult<AuthorizationResponse>
             // Fail if OTP Code is invalid
             if (request.AuthorizationRequest.otpCode != fakeOtp)
             {
-                return CommandResult<AuthorizationResponse>.GetFailed("Hatalı OTP Kodu!");
+                return CommandResult<AuthorizationResponse>.GetFailed(AuthorizationMessageConstants.FailOtp);
             }
 
             User user = await _userManager.FindByNameAsync(request.AuthorizationRequest.phoneNumber);
@@ -56,7 +57,7 @@ public class AuthorizeCommand : CommandBase<CommandResult<AuthorizationResponse>
                 response.AccessToken = _jwtService.CreateAccessToken(user);
                 response.RefreshToken = await _jwtService.CreateAndRegisterRefreshToken(user, _userManager);
 
-                return CommandResult<AuthorizationResponse>.GetSucceed("Başarı ile login olundu", response);
+                return CommandResult<AuthorizationResponse>.GetSucceed(AuthorizationMessageConstants.SuccessLogin, response);
             }
 
             // Registering new user
@@ -79,11 +80,11 @@ public class AuthorizeCommand : CommandBase<CommandResult<AuthorizationResponse>
                 response.AccessToken = _jwtService.CreateAccessToken(userToCreate);
                 response.RefreshToken = await _jwtService.CreateAndRegisterRefreshToken(userToCreate, _userManager);
 
-                return CommandResult<AuthorizationResponse>.GetSucceed("Başarı ile register olundu", response);
+                return CommandResult<AuthorizationResponse>.GetSucceed(AuthorizationMessageConstants.SuccessRegister, response);
             }
             else
             {
-                return CommandResult<AuthorizationResponse>.GetFailed("Register başarısız");
+                return CommandResult<AuthorizationResponse>.GetFailed(AuthorizationMessageConstants.FailRegister);
             }
         }
     }
