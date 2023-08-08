@@ -35,7 +35,7 @@ namespace Plugzy.Service.Auth.Commands
                 var checkCode = await _authenticationService.CheckOtpCode(request.Model.Phone);
 
                 if (checkCode.Data != null&&checkCode.Data.isActive) {
-                    var returnModel = new OtpResponse() { Confirm = true,Code=checkCode.Data.Code, Seconds = (int)(checkCode.Data.ValidTill - DateTime.Now).TotalSeconds};
+                    var returnModel = new OtpResponse() { Confirm = true,Code=checkCode.Data.Code, Seconds = (int)(checkCode.Data.ValidTill - DateTime.Now.Ticks)};
                     return CommandResult<OtpResponse>.GetSucceed(MessageConstans.CreatedOtpCode, returnModel);
                 }
 
@@ -46,7 +46,7 @@ namespace Plugzy.Service.Auth.Commands
                     Attmps = false,
                     Code = otpCode.Next(1000, 10000),
                     isActive = true,
-                    ValidTill=DateTime.Now.AddSeconds(180),
+                    ValidTill=DateTime.Now.AddSeconds(180).Ticks,
                 };
                 var response = await _otpRepository.CreateAsync(newOtp);
 

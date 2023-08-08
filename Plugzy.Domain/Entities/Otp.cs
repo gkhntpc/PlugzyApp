@@ -11,11 +11,11 @@ namespace Plugzy.Domain.Entities
     public class Otp : BaseEntity, IEntity
     {
         public int Code { get; set; }
-        public DateTime ValidTill { get; set; }
+        public Int64 ValidTill { get; set; }
         public string Phone { get; set; }
         public bool Attmps { get; set; }
         public bool isActive { get; set; }
-        public DateTime? LoginTime { get; set; }
+        public Int64? LoginTime { get; set; }
         public Otp()
         {
             Id = Guid.NewGuid();

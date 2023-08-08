@@ -27,7 +27,7 @@ namespace Plugzy.Service.Services
             var checkCode = await _otpRepository.GetAllAsync(c => c.Phone == phoneNumber);
             var getLastCode = checkCode.OrderByDescending(i => i.ValidTill).FirstOrDefault();
 
-            if (getLastCode != null && getLastCode.ValidTill > DateTime.Now)
+            if (getLastCode != null && getLastCode.ValidTill > DateTime.Now.Ticks)
             {
                 return CommandResult<Otp>.GetSucceed(getLastCode);
             }
@@ -39,7 +39,7 @@ namespace Plugzy.Service.Services
         {
             if(otp != null) 
             {
-                otp.LoginTime = DateTime.Now;
+                otp.LoginTime = DateTime.Now.Ticks;
                 otp.Attmps = true;
                 otp.isActive = false;
                 await _otpRepository.UpdateAsync(otp);
