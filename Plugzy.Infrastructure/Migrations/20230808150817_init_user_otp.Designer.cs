@@ -12,8 +12,8 @@ using Plugzy.Infrastructure.Context;
 namespace Plugzy.Infrastructure.Migrations
 {
     [DbContext(typeof(PlugzyDbContext))]
-    [Migration("20230802062520_AuthDatabaseMigration")]
-    partial class AuthDatabaseMigration
+    [Migration("20230808150817_init_user_otp")]
+    partial class init_user_otp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,14 +169,14 @@ namespace Plugzy.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
@@ -189,7 +189,8 @@ namespace Plugzy.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -209,7 +210,9 @@ namespace Plugzy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -226,8 +229,8 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -261,36 +264,36 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LoginTime")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("LoginTime")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ValidTill")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("ValidTill")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

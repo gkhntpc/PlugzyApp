@@ -166,14 +166,14 @@ namespace Plugzy.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
@@ -226,8 +226,8 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -261,33 +261,33 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LoginTime")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("LoginTime")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ValidTill")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("ValidTill")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
