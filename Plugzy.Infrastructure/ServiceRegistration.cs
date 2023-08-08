@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Plugzy.Domain.Entities;
 using Plugzy.Infrastructure.Context;
 using Plugzy.Infrastructure.Interface.Repository;
@@ -28,10 +29,14 @@ namespace Plugzy.Infrastructure
 
             serviceCollection.AddIdentity<AppUser, IdentityRole<Guid>>(opt =>
             {
-
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<PlugzyDbContext>();
 
             serviceCollection.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
+
         }
     }
 }

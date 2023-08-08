@@ -8,6 +8,9 @@ namespace Plugzy.Models.Mapper
     {
         public MapperProfile()
         {
+            CreateMap<AppUser, UserListResponse>().ReverseMap();
+            CreateMap<AppUser, CreateUserRequest>().ReverseMap();
+            CreateMap<AppUser, UserResponse>().ReverseMap();
             
         }
     }
