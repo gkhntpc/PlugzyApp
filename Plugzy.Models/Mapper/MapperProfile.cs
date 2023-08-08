@@ -8,8 +8,7 @@ namespace Plugzy.Models.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<TestEntity, TestResponse>()
-               .ReverseMap();
+            
         }
     }
 }
