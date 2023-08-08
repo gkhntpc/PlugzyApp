@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using Plugzy.Domain.Abstract;
-using Plugzy.Domain.Common;
 using Plugzy.Infrastructure.Context;
+using Plugzy.Infrastructure.Extensions.Pagination;
 using Plugzy.Infrastructure.Interface.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Plugzy.Models.Base;
+
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plugzy.Infrastructure.Repository
 {
-    public class GenericRepositoryAsync<T>: IGenericRepositoryAsync<T> where T : class, IEntity, new()
+    public class GenericRepositoryAsync<T> : IGenericRepositoryAsync<T> where T : class, new()
     {
         private readonly PlugzyDbContext _dbContext;
         public GenericRepositoryAsync(PlugzyDbContext dbContext)
@@ -38,6 +36,17 @@ namespace Plugzy.Infrastructure.Repository
         public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
         {
             return await _dbContext.Set<T>().SingleOrDefaultAsync(filter);
+        }
+
+        public async Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? filter = null, int index = 0, int size = 10,
+                                                CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> queryable = _dbContext.Set<T>();
+            
+            if (filter is not null)
+                queryable = queryable.Where(filter);
+
+            return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
         }
 
         public async Task RemoveAsync(T entity)
