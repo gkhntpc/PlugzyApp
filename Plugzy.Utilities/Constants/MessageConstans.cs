@@ -18,5 +18,14 @@ namespace Plugzy.Utilities.Constants
 
         public static string UserNotFound = "Kullanıcı Bulunamadı.";
         public static string UserAlreadyExists = "Bu Telefon Numarasına Kayıtlı Kullanıcı Mevcut.";
+
+        public static string BrandAlreadyExists = "Bu Marka İsmi Zaten Kullanımda.";
+        public static string BrandNotFound = "Marka Bulunamadı.";
+
+        public static string CountryAlreadyExists = "Bu Ülke İsmi Zaten Kullanımda.";
+        public static string CountryNotFound = "Ülke Bulunamadı.";
+
+        public static string CityAlreadyExists = "Bu Ülke İsmi Zaten Kullanımda.";
+        public static string CityNotFound = "Şehir Bulunamadı Bulunamadı.";
     }
 }

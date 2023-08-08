@@ -12,8 +12,8 @@ using Plugzy.Infrastructure.Context;
 namespace Plugzy.Infrastructure.Migrations
 {
     [DbContext(typeof(PlugzyDbContext))]
-    [Migration("20230802062520_AuthDatabaseMigration")]
-    partial class AuthDatabaseMigration
+    [Migration("20230808133333_database-insert")]
+    partial class databaseinsert
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,14 +169,14 @@ namespace Plugzy.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
@@ -189,7 +189,8 @@ namespace Plugzy.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -209,7 +210,9 @@ namespace Plugzy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -226,8 +229,8 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -249,6 +252,126 @@ namespace Plugzy.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Plugzy.Domain.Entities.Brand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("Plugzy.Domain.Entities.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Plugzy.Domain.Entities.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
             modelBuilder.Entity("Plugzy.Domain.Entities.Otp", b =>
                 {
                     b.Property<Guid>("Id")
@@ -261,36 +384,36 @@ namespace Plugzy.Infrastructure.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("DeletedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LoginTime")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("LoginTime")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ValidTill")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("ValidTill")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -346,6 +469,17 @@ namespace Plugzy.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Plugzy.Domain.Entities.City", b =>
+                {
+                    b.HasOne("Plugzy.Domain.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 #pragma warning restore 612, 618
         }

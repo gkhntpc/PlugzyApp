@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Plugzy.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AuthDatabaseMigration : Migration
+    public partial class databaseinsert : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,24 +30,24 @@ namespace Plugzy.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<long>(type: "bigint", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -60,22 +60,61 @@ namespace Plugzy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Logo = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Otps",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<int>(type: "int", nullable: false),
-                    ValidTill = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ValidTill = table.Column<long>(type: "bigint", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Attmps = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    LoginTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    LoginTime = table.Column<long>(type: "bigint", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedAt = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -188,6 +227,32 @@ namespace Plugzy.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -226,6 +291,11 @@ namespace Plugzy.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CountryId",
+                table: "Cities",
+                column: "CountryId");
         }
 
         /// <inheritdoc />
@@ -247,6 +317,12 @@ namespace Plugzy.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Brands");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
                 name: "Otps");
 
             migrationBuilder.DropTable(
@@ -254,6 +330,9 @@ namespace Plugzy.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
         }
     }
 }

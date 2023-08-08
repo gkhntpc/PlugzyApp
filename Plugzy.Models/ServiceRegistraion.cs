@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace Plugzy.Models
             var assm = Assembly.GetExecutingAssembly();
             serviceCollection.AddAutoMapper(assm);
             serviceCollection.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(assm));
+            serviceCollection.AddAutoMapper(assm);
         }
     }
 }
