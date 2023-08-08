@@ -63,7 +63,7 @@ namespace Plugzy.Service.Auth.Commands
                 {
                     PhoneNumber = request.Model.PhoneNumber,
                     Status = Status.Active,
-                    Type = Domain.Entities.Type.Register,
+                    Type = Domain.Entities.Type.Client,
                     CreatedAt = DateTime.UtcNow.Ticks,
                     UserName = request.Model.PhoneNumber
                 };
