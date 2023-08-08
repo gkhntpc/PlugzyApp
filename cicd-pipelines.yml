@@ -1,0 +1,114 @@
+trigger: none
+
+parameters:
+- name: env
+  displayName: Environment Selection
+  type: string
+  default: DEV
+  values:
+  - DEV
+  - UAT
+  - PROD
+
+- name: appname
+  displayName: Application Name
+  type: string
+  default: Plugzy-Api
+  values:
+  - Plugzy-Api
+
+variables: 
+  ## Add this under variables section in the pipeline
+  - name: azureSubscription
+    value: 'Nextlua'
+  - name: containerRegistry
+    value: 'nextluacr'
+  - name: tag
+    value: '$(Build.BuildId)'
+  - name: projectPath
+    value: $[replace('${{ parameters.appname }}' , '-' , '.')]
+  - name: projectName
+    value: ${{ lower(parameters.appname) }}
+  - group: Nextlua-Global-${{ parameters.env }}
+#  - group: ${{ parameters.appname }}-${{ parameters.env }}
+
+resources:
+- repo: self
+
+
+stages:
+- stage: BuildAndDeploy
+  displayName: Build and Deploy ${{ parameters.appname }} ${{ parameters.env }}
+  jobs: 
+  - deployment: BuildAndDeploy
+    displayName: Build and Deploy ${{ parameters.appname }} ${{ parameters.env }}
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: ${{ parameters.env }}
+    continueOnError: false
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+
+          - task: Docker@2
+            displayName: Build Image $(projectName) ${{ parameters.env }}
+            enabled: true
+            inputs:
+              command: build
+              containerRegistry: $(containerRegistry)
+              repository: $(projectName)
+              dockerfile: $(projectPath)/Dockerfile
+              buildContext: '.'
+
+
+          - task: Docker@2
+            displayName: Push Image $(projectName) ${{ parameters.env }}
+            enabled: true
+            inputs:
+              command: push
+              containerRegistry: $(containerRegistry)
+              repository: $(projectName)
+              tags: |
+                $(tag)
+
+          - task: AzureContainerAppsRC@0
+            enabled: false
+            inputs:
+              azureSubscription: $(azureSubscription)
+              containerAppName: $(appName)
+              resourceGroup: '$(resourceGroupName)'
+              imageToDeploy: '$(containerRegistry).azurecr.io/$(projectName):$(tag)'
+              acrUsername: $(acrUsername)
+              acrPassword: $(acrPassword)
+              #acrName: $(containerRegistry)
+
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: $(azureSubscription)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az --version
+                az account show
+                az config set extension.use_dynamic_install=yes_without_prompt
+                az containerapp update -n $(appName) -g $(resourceGroupName) \
+                  --image $(containerRegistry).azurecr.io/$(projectName):$(tag)
+
+                # az containerapp registry set \
+                #   --name $(appName) \
+                #   --resource-group $(resourceGroupName) \
+                #   --server $(containerRegistry).azurecr.io \
+                #   --identity system
+
+          #- task: AzureWebAppContainer@1
+          #  inputs:
+          #    azureSubscription: $(azureSubscription)
+          #    appName: $(appName)
+          #    imageName: $(containerRegistry)/$(projectName):$(tag)
+          #    deployToSlotOrASE: false
+          #    resourceGroupName: '$(resourceGroupName)'
+          #    containers: $(projectName)
+          #    #slotName: ${{ parameters.env }}
